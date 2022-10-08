@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="1.0.2" type="plugin" group="captcha" method="upgrade">
+<extension version="1.2.0" type="plugin" group="captcha" method="upgrade">
 	<name>PLG_CAPTCHA_QLCAPTCHA</name>
-	<version>1.0.3</version>
-	<creationDate>June 2016</creationDate>
+	<version>1.2.0</version>
+	<creationDate>June 2022</creationDate>
 	<author>Mareike Riegel</author>
 	<authorEmail>admin@joomla.org</authorEmail>
-	<authorUrl>www.ql.de</authorUrl>
-	<copyright>Copyright (C) 2016 ql.de. All rights reserved.</copyright>
+	<authorUrl>ql.de</authorUrl>
+	<copyright>Copyright (C) 2022 ql.de. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<description>PLG_CAPTCHA_QLCAPTCHA_DESC</description>
 	<updateservers>
-        <server type="extension" priority="1" name="qlcaptcha - Updates"><![CDATA[https://www.blackforest-software.com/_scripts/updates/plg_captcha_qlcaptcha.xml]]></server>
+        <server type="extension" priority="1" name="qlcaptcha - Updates">https://raw.githubusercontent.com/hoochicken/plg_captcha_qlcaptcha/main/_jupdate/plg_captcha_qlcaptcha.xml</server>
     </updateservers>
 	<files>
 		<filename plugin="qlcaptcha">qlcaptcha.php</filename>
