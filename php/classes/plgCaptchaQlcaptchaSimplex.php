@@ -42,13 +42,13 @@ class plgCaptchaQlcaptchaSimplex
      * @var array
      * @access public
      */
-    public $arrBGColor = array(255, 255, 255);
+    public $arrBGColor = [255, 255, 255];
     /**
      * an array with rgb colors fontcolors of the captcha letters
      * @var array
      * @access public
      */
-    public $arrTextColor = array(24, 24, 24);
+    public $arrTextColor = [24, 24, 24];
     /**
      * the number of letters
      * @var int
@@ -122,7 +122,9 @@ class plgCaptchaQlcaptchaSimplex
         $chars = 'bcdefghkmnopqrstuvwxyz2345678';
         $string = '';
         mt_srand((double)microtime() * 1000000);
-        for ($i = 0; $i < $this->intTextLenght; $i++) $string .= $chars{mt_rand(0, strlen($chars) - 1)};
+        for ($i = 0; $i < $this->intTextLenght; $i++) {
+            $string .= $chars[mt_rand(0, strlen($chars) - 1)];
+        }
         $this->solution = $string;
         return $string;
     }

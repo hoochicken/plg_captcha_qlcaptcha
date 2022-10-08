@@ -22,6 +22,8 @@ class PlgCaptchaQlcaptcha extends JPlugin
      * @since  3.1
      */
     protected $autoloadLanguage = true;
+    protected $obj_captcha = null;
+    protected $messages = [];
 
     /**
      * constructor
@@ -46,13 +48,20 @@ class PlgCaptchaQlcaptcha extends JPlugin
      */
     public function onInit($id = 'qlcaptcha')
     {
-        require_once(JPATH_ROOT . '/plugins/captcha/qlcaptcha/php/classes/plgCaptchaQlcaptcha2.php');
-        $tmp = 'tmp/' . $this->get('_name');
-        $this->obj_captcha = new plgCaptchaQlcaptcha2();
-        $this->obj_captcha->checkTmpQlcaptcha($tmp);
-        $objPlg = clone $this;
-        $objPlg->extName = $this->get('_name');
-        $this->obj_captcha->initiateCaptcha($objPlg, $tmp);
+        try {
+            require_once(JPATH_ROOT . '/plugins/captcha/qlcaptcha/php/classes/plgCaptchaQlcaptcha2.php');
+            if (!function_exists('imagecreate')) {
+                throw new Exception('qlcaptcha requires the library  ... on server. Please install. Then it will work:-)');
+            }
+            $tmp = 'tmp/' . $this->get('_name');
+            $this->obj_captcha = new plgCaptchaQlcaptcha2();
+            $this->obj_captcha->checkTmpQlcaptcha($tmp);
+            $objPlg = clone $this;
+            $objPlg->extName = $this->get('_name');
+            $this->obj_captcha->initiateCaptcha($objPlg, $tmp);
+        }  catch(Exception $e) {
+            $this->setMessage($e->getMessage());
+        }
     }
 
     /**
@@ -69,7 +78,14 @@ class PlgCaptchaQlcaptcha extends JPlugin
      */
     public function onDisplay($name = null, $id = 'dynamic_qlcaptcha_1', $class = '')
     {
-        $html = array();
+        $html = [];
+        if (0 < count($this->messages)) {
+            $html[] = '<div class="alert alert-info">' . implode('<br />', $this->messages) . '</div>';
+        }
+        if (is_null($this->obj_captcha) ) {
+            return implode("\n", $html);
+        }
+
         $html[] = '<div class="image">';
         $html[] = '<img src="' . $this->obj_captcha->captcha . '"/>';
         $html[] = '</div>';
@@ -87,11 +103,12 @@ class PlgCaptchaQlcaptcha extends JPlugin
 
     /**
      * Calls an HTTP POST function to verify if the user's guess was correct
-     * @param string $code Answer provided by user. Not needed for the Qlcaptcha implementation
+     * @param string|null $code Answer provided by user. Not needed for the Qlcaptcha implementation
      * @return  True if the answer is correct, false otherwise
+     * @throws Exception
      * @since  2.5
      */
-    public function onCheckAnswer($code = null)
+    public function onCheckAnswer(string $code = null)
     {
         $input = JFactory::getApplication()->input;
         $strCaptcha = $input->getString('qlcaptcha');
@@ -100,5 +117,14 @@ class PlgCaptchaQlcaptcha extends JPlugin
         $validated = plgCaptchaQlcaptcha2::checkCaptcha($strCaptcha, $key, true);
         if (false == $validated) $this->_subject->setError(JText::_('PLG_CAPTCHA_QLCAPTCHA_MSG_CAPTCHAFAILED'));
         return $validated;
+    }
+
+    /**
+     * @param $message
+     * @return void
+     */
+    private function setMessage($message)
+    {
+        $this->messages[] = $message;
     }
 }

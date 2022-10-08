@@ -54,7 +54,7 @@ class plgCaptchaQlcaptcha2
 
     function runCaptchaSettings()
     {
-        $array = array('intTextLenght', 'intFontSize', 'intFontStartX', 'intFontStartY', 'intIMGWidth', 'intIMGHeight', 'arrTextColor', 'arrBGColor', 'intFontAngel');
+        $array = ['intTextLenght', 'intFontSize', 'intFontStartX', 'intFontStartY', 'intIMGWidth', 'intIMGHeight', 'arrTextColor', 'arrBGColor', 'intFontAngel'];
         foreach ($array as $v) {
             if ('arrTextColor' != $v and 'arrBGColor' != $v) $this->obj_captcha->$v = $this->params->get('captcha_' . $v);
             else $this->obj_captcha->$v = $this->hexcolor($this->params->get('captcha_' . $v));
@@ -64,7 +64,7 @@ class plgCaptchaQlcaptcha2
     public function hexcolor($hex)
     {
         $hex = preg_replace('/#/', '', $hex);
-        $color = array();
+        $color = [];
         if (3 == strlen($hex)) {
             $color[] = hexdec(substr($hex, 0, 1) . substr($hex, 0, 1));
             $color[] = hexdec(substr($hex, 1, 1) . substr($hex, 1, 1));
@@ -95,7 +95,7 @@ class plgCaptchaQlcaptcha2
         $return = false;
         $session = JFactory::getSession();
         $arrSession = $session->get('plgCaptchaQlcaptcha');
-        if (isset($strCaptcha) and is_array($arrSession) and isset($arrSession['code'][$key]) and isset($arrSession['code'][$key]) and $strCaptcha == $arrSession['code'][$key]) $return = true;
+        if (isset($strCaptcha) && is_array($arrSession) && isset($arrSession['code'][$key]) && isset($arrSession['code'][$key]) && $strCaptcha == $arrSession['code'][$key]) $return = true;
         return $return;
     }
 
@@ -107,11 +107,11 @@ class plgCaptchaQlcaptcha2
     {
         $session = JFactory::getSession();
         $arrSession = $session->get('plgCaptchaQlcaptcha');
-        if (!is_array($arrSession)) $arrSession = array();
-        if (!isset($arrSession['filename']) or !is_array($arrSession['filename'])) $arrSession['filename'] = array();
-        if (!isset($arrSession['text']) or !is_array($arrSession['filename'])) $arrSession['text'] = array();
-        if (!isset($arrSession['code']) or !is_array($arrSession['code'])) $arrSession['code'] = array();
-        if (!isset($arrSession['code'][$key])) $arrSession['code'][$key] = array();
+        if (!is_array($arrSession)) $arrSession = [];
+        if (!isset($arrSession['filename']) || !is_array($arrSession['filename'])) $arrSession['filename'] = [];
+        if (!isset($arrSession['text']) || !is_array($arrSession['filename'])) $arrSession['text'] = [];
+        if (!isset($arrSession['code']) || !is_array($arrSession['code'])) $arrSession['code'] = [];
+        if (!isset($arrSession['code'][$key])) $arrSession['code'][$key] = [];
         $arrSession['text'][$key] = $this->obj_captcha->text;
         $arrSession['filename'][$key] = $this->destination;
         $arrSession['code'][$key] = $this->obj_captcha->solution;
@@ -138,10 +138,10 @@ class plgCaptchaQlcaptcha2
     {
         $handle = opendir($folder);
         while ($file = readdir($handle)) {
-            if ('.' != $file and '..' != $file and 'index.html' != $file) {
+            if ('.' != $file && '..' != $file && 'index.html' != $file) {
                 $arr = preg_split('?_?', $file);
                 $dateFile = substr(array_pop($arr), 0, 6);
-                if ($dateFile + 1 < date('ymd') and file_exists($folder . '/' . $file)) unlink($folder . '/' . $file);
+                if ($dateFile + 1 < date('ymd') && file_exists($folder . '/' . $file)) unlink($folder . '/' . $file);
             }
         }
         closedir($handle);
@@ -156,7 +156,7 @@ class plgCaptchaQlcaptcha2
     {
         //if(true==$ignoreKey)return 1;
         if (false == $key) $key = rand(1, 10000);
-        if (isset($_SESSION['plgCaptchaQlcaptcha']) and isset($_SESSION['plgCaptchaQlcaptcha']['code']) and isset($_SESSION['plgCaptchaQlcaptcha']['code'][$key])) $key = $this->getKey($key);
+        if (isset($_SESSION['plgCaptchaQlcaptcha']) && isset($_SESSION['plgCaptchaQlcaptcha']['code']) && isset($_SESSION['plgCaptchaQlcaptcha']['code'][$key])) $key = $this->getKey($key);
         return $key;
     }
 

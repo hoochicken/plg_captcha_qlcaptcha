@@ -22,14 +22,14 @@ class plgCaptchaQlcaptchaCalculator extends plgCaptchaQlcaptchaSimplex
         $this->level = 1;
         $first = rand(5, 20);
         $second = rand(5, 10);
-        $type = array_rand(array(0, 1));
-        if (0 == $type and $first > $second and 0 == $first % $second) {
+        $type = array_rand([0, 1]);
+        if (0 == $type && $first > $second && 0 == $first % $second) {
             $string = $first . ' : ' . $second;
             $this->solution = $first / $second;
-        } elseif (0 == $type and $first > $second) {
+        } elseif (0 == $type && $first > $second) {
             $this->solution = $first - $second;
             $string = $first . ' - ' . $second;
-        } elseif (1 == $type and $first <= 10 and $second <= 10) {
+        } elseif (1 == $type && $first <= 10 && $second <= 10) {
             $string = $first . ' x ' . $second;
             $this->solution = $first * $second;
         } else {
