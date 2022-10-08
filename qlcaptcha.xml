@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="1.0.2" type="plugin" group="captcha" method="upgrade">
+	<name>PLG_CAPTCHA_QLCAPTCHA</name>
+	<version>1.0.3</version>
+	<creationDate>June 2016</creationDate>
+	<author>Mareike Riegel</author>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.ql.de</authorUrl>
+	<copyright>Copyright (C) 2016 ql.de. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<description>PLG_CAPTCHA_QLCAPTCHA_DESC</description>
+	<updateservers>
+        <server type="extension" priority="1" name="qlcaptcha - Updates"><![CDATA[https://www.blackforest-software.com/_scripts/updates/plg_captcha_qlcaptcha.xml]]></server>
+    </updateservers>
+	<files>
+		<filename plugin="qlcaptcha">qlcaptcha.php</filename>
+        <folder plugin="qlcaptcha">fonts</folder>
+        <folder plugin="qlcaptcha">language</folder>
+        <folder plugin="qlcaptcha">php</folder>
+	</files>
+    <languages>
+        <language tag="en-GB">language/en-GB/en-GB.plg_captcha_qlcaptcha.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.plg_captcha_qlcaptcha.sys.ini</language>
+        <language tag="de-DE">language/de-DE/de-DE.plg_captcha_qlcaptcha.ini</language>
+        <language tag="de-DE">language/de-DE/de-DE.plg_captcha_qlcaptcha.sys.ini</language>
+    </languages>
+    <config>
+	<fields name="params">
+		<fieldset name="basic">
+            <field
+                    name="captchadesc"
+                    type="text"
+                    size="70"
+                    label="PLG_CAPTCHA_QLCAPTCHA_CAPTCHADESC_LABEL"
+                    description="PLG_CAPTCHA_QLCAPTCHA_CAPTCHADESC_DESC">
+            </field>
+            <field
+                    name="captchaLabelswithin"
+                    type="radio"
+                    class="btn-group"
+                    default="0"
+                    label="PLG_CAPTCHA_QLCAPTCHA_LABELSWITHIN_LABEL"
+                    description="PLG_CAPTCHA_QLCAPTCHA_LABELSWITHIN_DESC">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+            <field
+                    name="captcha_intTextLenght"
+                    type="text"
+                    size="70"
+                    default="4"
+                    label="PLG_CAPTCHA_QLCAPTCHA_INTTEXTLENGTH_LABEL"
+                    description="PLG_CAPTCHA_QLCAPTCHA_INTTEXTLENGTH_DESC">
+            </field>
+		</fieldset>
+		<fieldset name="styles">
+
+            <field
+                    name="captcha_intFontSize"
+                    type="text"
+                    size="70"
+                    default="26"
+                    label="PLG_CAPTCHA_QLCAPTCHA_INTFONTSIZE_LABEL"
+                    description="PLG_CAPTCHA_QLCAPTCHA_INTFONTSIZE_DESC">
+            </field>
+            <field
+                    name="captcha_intIMGWidth"
+                    type="text"
+                    size="70"
+                    default="160"
+                    label="PLG_CAPTCHA_QLCAPTCHA_INTIMAGEWIDTH_LABEL"
+                    description="PLG_CAPTCHA_QLCAPTCHA_INTIMAGEWIDTH_DESC">
+            </field>
+            <field
+                    name="captcha_intIMGHeight"
+                    type="text"
+                    size="70"
+                    default="70"
+                    label="PLG_CAPTCHA_QLCAPTCHA_INTIMAGEHEIGHT_LABEL"
+                    description="PLG_CAPTCHA_QLCAPTCHA_INTIMAGEHEIGHT_DESC">
+            </field>
+            <field
+                    name="captcha_intFontStartX"
+                    type="integer"
+                    first="0"
+                    last="200"
+                    default="20"
+                    step="5"
+                    label="PLG_CAPTCHA_QLCAPTCHA_INTFONTSTARTX_LABEL"
+                    description="PLG_CAPTCHA_QLCAPTCHA_INTFONTSTARTX_DESC">
+            </field>
+            <field
+                    name="captcha_intFontStartY"
+                    type="integer"
+                    first="0"
+                    last="200"
+                    default="60"
+                    step="5"
+                    label="PLG_CAPTCHA_QLCAPTCHA_INTFONTSTARTY_LABEL"
+                    description="PLG_CAPTCHA_QLCAPTCHA_INTFONTSTARTY_DESC">
+            </field>
+            <field
+                    name="captcha_arrBGColor"
+                    type="color"
+                    size="70"
+                    default="#ffffff"
+                    label="PLG_CAPTCHA_QLCAPTCHA_COLORBG_LABEL"
+                    description="PLG_CAPTCHA_QLCAPTCHA_COLORBG_DESC">
+            </field>
+            <field
+                    name="captcha_arrBGColorTransparent"
+                    type="radio"
+                    class="btn-group"
+                    label="PLG_CAPTCHA_QLCAPTCHA_TRANSPARENT_LABEL"
+                    description="PLG_CAPTCHA_QLCAPTCHA_TRANSPARENT_DESC"
+                    default="0">
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+            <field
+                    name="captcha_arrTextColor"
+                    type="color"
+                    size="70"
+                    default="#000000"
+                    label="PLG_CAPTCHA_QLCAPTCHA_COLORTXT_LABEL"
+                    description="PLG_CAPTCHA_QLCAPTCHA_COLORTXT_DESC">
+            </field>
+            <field
+                    name="captcha_intFontAngel"
+                    type="integer"
+                    default="7"
+                    step="6"
+                    first="0"
+                    last="360"
+                    label="PLG_CAPTCHA_QLCAPTCHA_INTFONTANGEL_LABEL"
+                    description="PLG_CAPTCHA_QLCAPTCHA_INTFONTANGEL_DESC">
+            </field>
+		</fieldset>
+	</fields>
+	</config>
+</extension>
