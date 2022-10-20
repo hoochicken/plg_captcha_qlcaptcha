@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="1.2.0" type="plugin" group="captcha" method="upgrade">
 	<name>PLG_CAPTCHA_QLCAPTCHA</name>
-	<version>1.2.0</version>
+	<version>1.2.1</version>
 	<creationDate>June 2022</creationDate>
 	<author>Mareike Riegel</author>
 	<authorEmail>admin@joomla.org</authorEmail>
