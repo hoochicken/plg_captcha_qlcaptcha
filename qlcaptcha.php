@@ -53,11 +53,12 @@ class PlgCaptchaQlcaptcha extends JPlugin
             if (!function_exists('imagecreate')) {
                 throw new Exception('qlcaptcha requires the library  ... on server. Please install. Then it will work:-)');
             }
-            $tmp = 'tmp/' . $this->get('_name');
+            $name = method_exists($this, 'has') ? $this->get('_name') : $this->_name;
+            $tmp = 'tmp/' . $name; // $this->get('_name');
             $this->obj_captcha = new plgCaptchaQlcaptcha2();
             $this->obj_captcha->checkTmpQlcaptcha($tmp);
             $objPlg = clone $this;
-            $objPlg->extName = $this->get('_name');
+            $objPlg->extName = $name;
             $this->obj_captcha->initiateCaptcha($objPlg, $tmp);
         }  catch(Exception $e) {
             $this->setMessage($e->getMessage());
@@ -115,7 +116,10 @@ class PlgCaptchaQlcaptcha extends JPlugin
         $key = $input->getString('qlcaptchakey');
         require_once(JPATH_ROOT . '/plugins/captcha/qlcaptcha/php/classes/plgCaptchaQlcaptcha2.php');
         $validated = plgCaptchaQlcaptcha2::checkCaptcha($strCaptcha, $key, true);
-        if (false == $validated) $this->_subject->setError(JText::_('PLG_CAPTCHA_QLCAPTCHA_MSG_CAPTCHAFAILED'));
+        if (!$validated) {
+            if (4 >= (int) JVERSION) JFactory::getApplication()->enqueueMessage(JText::_('PLG_CAPTCHA_QLCAPTCHA_MSG_CAPTCHAFAILED'));
+            else $this->_subject->setError(JText::_('PLG_CAPTCHA_QLCAPTCHA_MSG_CAPTCHAFAILED'));
+        }
         return $validated;
     }
 
