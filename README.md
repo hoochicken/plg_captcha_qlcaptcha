@@ -19,3 +19,8 @@ This captcha plugin generates a customizable captcha.
 * Done!
 
 Afterwards go to extensions > plugin > qlcaptcha again and customize its params adjusting to your needs.
+
+## What about a coffee ..
+
+I love coding. My extensions are for free. Wanna say thanks? You're welcome! 
+<https://www.buymeacoffee.com/mareikeRiegel>
