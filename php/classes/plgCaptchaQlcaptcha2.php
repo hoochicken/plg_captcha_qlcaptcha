@@ -25,7 +25,7 @@ class plgCaptchaQlcaptcha2
         $this->_name = $obj->getExtName();
         $this->params = $obj->params;
         $this->tmp = $tmp;
-        $this->destination = $this->getFilename($tmp, 1);
+        $this->destination = $this->getFilename($tmp, uniqid());
         $this->captcha = $this->destination . '?' . rand(0, 10000);
         $this->type = $this->params->get('captcha', 1);
         $this->fontPath = $this->params->get('fontPath', 'plugins/captcha/' . $this->_name . '/fonts/LS-Bold.otf');
