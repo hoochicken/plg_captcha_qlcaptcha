@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="1.2.0" type="plugin" group="captcha" method="upgrade">
 	<name>PLG_CAPTCHA_QLCAPTCHA</name>
-	<version>1.3.1</version>
+	<version>1.3.2</version>
 	<creationDate>2023-03-24</creationDate>
 	<author>Mareike Riegel</author>
 	<authorEmail>info@ql.de</authorEmail>
