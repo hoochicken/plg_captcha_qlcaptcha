@@ -14,9 +14,8 @@ class plgCaptchaQlcaptcha2
 {
     /**
      * wants to have file path and folder path
-     * @param array $arrBG with rgb color information for background
-     * @param array $arrTxt with rgb color information for text
-     * @param string $strFont path of font-file
+     * @param $obj
+     * @param $tmp
      * @return bool ture on success, false on failure
      */
     //function __construct($strFont,$strCaptchaSaveFile)

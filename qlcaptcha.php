@@ -22,8 +22,9 @@ class PlgCaptchaQlcaptcha extends JPlugin
      * @since  3.1
      */
     protected $autoloadLanguage = true;
-    protected $obj_captcha = null;
-    protected $messages = [];
+    protected plgCaptchaQlcaptcha2 $obj_captcha;
+    protected array $messages = [];
+    protected string $extName;
 
     /**
      * constructor
@@ -46,14 +47,14 @@ class PlgCaptchaQlcaptcha extends JPlugin
      *
      * @since  2.5
      */
-    public function onInit($id = 'qlcaptcha')
+    public function onInit(string $id = 'qlcaptcha')
     {
         try {
-            require_once(JPATH_ROOT . '/plugins/captcha/qlcaptcha/php/classes/plgCaptchaQlcaptcha2.php');
+            require_once(__DIR__ . '/php/classes/plgCaptchaQlcaptcha2.php');
             if (!function_exists('imagecreate')) {
-                throw new Exception('qlcaptcha requires the library  ... on server. Please install. Then it will work:-)');
+                throw new Exception('qlcaptcha requires the library `gd` on server. Please install. Then it will work:-)');
             }
-            $name = method_exists($this, 'has') ? $this->get('_name') : $this->_name;
+            $name = method_exists($this, 'get') ? $this->get('_name') : $this->_name;
             $tmp = 'tmp/' . $name; // $this->get('_name');
             $this->obj_captcha = new plgCaptchaQlcaptcha2();
             $this->obj_captcha->checkTmpQlcaptcha($tmp);
@@ -114,11 +115,11 @@ class PlgCaptchaQlcaptcha extends JPlugin
         $input = JFactory::getApplication()->input;
         $strCaptcha = $input->getString('qlcaptcha');
         $key = $input->getString('qlcaptchakey');
-        require_once(JPATH_ROOT . '/plugins/captcha/qlcaptcha/php/classes/plgCaptchaQlcaptcha2.php');
+
+        require_once(__DIR__ . '/php/classes/plgCaptchaQlcaptcha2.php');
         $validated = plgCaptchaQlcaptcha2::checkCaptcha($strCaptcha, $key, true);
         if (!$validated) {
-            if (4 >= (int) JVERSION) JFactory::getApplication()->enqueueMessage(JText::_('PLG_CAPTCHA_QLCAPTCHA_MSG_CAPTCHAFAILED'));
-            else $this->_subject->setError(JText::_('PLG_CAPTCHA_QLCAPTCHA_MSG_CAPTCHAFAILED'));
+            JFactory::getApplication()->enqueueMessage(JText::_('PLG_CAPTCHA_QLCAPTCHA_MSG_CAPTCHAFAILED'));
         }
         return $validated;
     }
