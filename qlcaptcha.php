@@ -24,7 +24,6 @@ class PlgCaptchaQlcaptcha extends JPlugin
     protected $autoloadLanguage = true;
     protected plgCaptchaQlcaptcha2 $obj_captcha;
     protected array $messages = [];
-    public string $extName;
 
     /**
      * constructor
@@ -59,11 +58,16 @@ class PlgCaptchaQlcaptcha extends JPlugin
             $this->obj_captcha = new plgCaptchaQlcaptcha2();
             $this->obj_captcha->checkTmpQlcaptcha($tmp);
             $objPlg = clone $this;
-            $objPlg->extName = $name;
+            $objPlg->setExtName($name);
             $this->obj_captcha->initiateCaptcha($objPlg, $tmp);
         }  catch(Exception $e) {
             $this->setMessage($e->getMessage());
         }
+    }
+
+    public function setExtName($value)
+    {
+        $this->extName = $value;
     }
 
     public function getExtName()
