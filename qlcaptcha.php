@@ -50,7 +50,7 @@ class PlgCaptchaQlcaptcha extends JPlugin
     public function onInit(string $id = 'qlcaptcha')
     {
         try {
-            require_once(__DIR__ . '/php/classes/plgCaptchaQlcaptcha2.php');
+            require_once(JPATH_ROOT . '/plugins/captcha/qlcaptcha/php/classes/plgCaptchaQlcaptcha2.php');
             if (!function_exists('imagecreate')) {
                 throw new Exception('qlcaptcha requires the library `gd` on server. Please install. Then it will work:-)');
             }
@@ -64,6 +64,11 @@ class PlgCaptchaQlcaptcha extends JPlugin
         }  catch(Exception $e) {
             $this->setMessage($e->getMessage());
         }
+    }
+
+    public function getExtName()
+    {
+        return $this->extName;
     }
 
     /**
@@ -116,7 +121,7 @@ class PlgCaptchaQlcaptcha extends JPlugin
         $strCaptcha = $input->getString('qlcaptcha');
         $key = $input->getString('qlcaptchakey');
 
-        require_once(__DIR__ . '/php/classes/plgCaptchaQlcaptcha2.php');
+        require_once(JPATH_ROOT . '/plugins/captcha/qlcaptcha/php/classes/plgCaptchaQlcaptcha2.php');
         $validated = plgCaptchaQlcaptcha2::checkCaptcha($strCaptcha, $key, true);
         if (!$validated) {
             JFactory::getApplication()->enqueueMessage(JText::_('PLG_CAPTCHA_QLCAPTCHA_MSG_CAPTCHAFAILED'));

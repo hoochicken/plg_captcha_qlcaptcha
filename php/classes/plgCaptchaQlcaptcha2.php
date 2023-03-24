@@ -22,7 +22,7 @@ class plgCaptchaQlcaptcha2
 
     public function initiateCaptcha($obj, $tmp)
     {
-        $this->_name = $obj->extName;
+        $this->_name = $obj->getExtName();
         $this->params = $obj->params;
         $this->tmp = $tmp;
         $this->destination = $this->getFilename($tmp, 1);
