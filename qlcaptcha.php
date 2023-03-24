@@ -24,7 +24,7 @@ class PlgCaptchaQlcaptcha extends JPlugin
     protected $autoloadLanguage = true;
     protected plgCaptchaQlcaptcha2 $obj_captcha;
     protected array $messages = [];
-    protected string $extName;
+    public string $extName;
 
     /**
      * constructor
