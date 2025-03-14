@@ -2,9 +2,9 @@
 /**
  * @package     plg_captcha_qlcaptcha
  * @subpackage  Captcha
- * @copyright   Copyright (C) 2022 ql.de. All rights reserved.
+ * @copyright   Copyright (C) 2025 ql.de. All rights reserved.
  * @author      Mareike Riegel
- * @email       mareike.riegel@ql.de
+ * @email       info@ql.de
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -60,7 +60,7 @@ class PlgCaptchaQlcaptcha extends JPlugin
             $objPlg = clone $this;
             $objPlg->setExtName($name);
             $this->obj_captcha->initiateCaptcha($objPlg, $tmp);
-        }  catch(Exception $e) {
+        } catch (Exception $e) {
             $this->setMessage($e->getMessage());
         }
     }
@@ -93,7 +93,7 @@ class PlgCaptchaQlcaptcha extends JPlugin
         if (0 < count($this->messages)) {
             $html[] = '<div class="alert alert-info">' . implode('<br />', $this->messages) . '</div>';
         }
-        if (is_null($this->obj_captcha) ) {
+        if (is_null($this->obj_captcha)) {
             return implode("\n", $html);
         }
 

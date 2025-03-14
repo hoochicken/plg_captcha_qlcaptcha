@@ -2,9 +2,9 @@
 /**
  * @package     plg_captcha_qlcaptcha
  * @subpackage  Captcha
- * @copyright   Copyright (C) 2022 ql.de. All rights reserved.
+ * @copyright   Copyright (C) 2025 ql.de. All rights reserved.
  * @author      Mareike Riegel
- * @email       mareike.riegel@ql.de
+ * @email       info@ql.de
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 

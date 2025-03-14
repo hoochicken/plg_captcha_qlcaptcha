@@ -2,9 +2,9 @@
 /**
  * @package     plg_captcha_qlcaptcha
  * @subpackage  Captcha
- * @copyright   Copyright (C) 2022 ql.de. All rights reserved.
+ * @copyright   Copyright (C) 2025 ql.de. All rights reserved.
  * @author      Mareike Riegel
- * @email       mareike.riegel@ql.de
+ * @email       info@ql.de
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -29,8 +29,12 @@ class plgCaptchaQlcaptcha2
         $this->captcha = $this->destination . '?' . rand(0, 10000);
         $this->type = $this->params->get('captcha', 1);
         $this->fontPath = $this->params->get('fontPath', 'plugins/captcha/' . $this->_name . '/fonts/LS-Bold.otf');
-        if (1 == $this->type) $this->initiateCaptchaSimplex();
-        if (2 == $this->type) $this->initiateCaptchaCalculator();
+        if (1 == $this->type) {
+            $this->initiateCaptchaSimplex();
+        }
+        if (2 == $this->type) {
+            $this->initiateCaptchaCalculator();
+        }
         $this->runCaptchaSettings();
         $this->obj_captcha->captcha = $this->captcha;
         $this->key = $this->getKey(false, true);
@@ -55,8 +59,11 @@ class plgCaptchaQlcaptcha2
     {
         $array = ['intTextLenght', 'intFontSize', 'intFontStartX', 'intFontStartY', 'intIMGWidth', 'intIMGHeight', 'arrTextColor', 'arrBGColor', 'intFontAngel'];
         foreach ($array as $v) {
-            if ('arrTextColor' != $v and 'arrBGColor' != $v) $this->obj_captcha->$v = $this->params->get('captcha_' . $v);
-            else $this->obj_captcha->$v = $this->hexcolor($this->params->get('captcha_' . $v));
+            if ('arrTextColor' != $v and 'arrBGColor' != $v) {
+                $this->obj_captcha->$v = $this->params->get('captcha_' . $v);
+            } else {
+                $this->obj_captcha->$v = $this->hexcolor($this->params->get('captcha_' . $v));
+            }
         }
     }
 
@@ -89,13 +96,14 @@ class plgCaptchaQlcaptcha2
      * checks captcha
      * @return string the rendered text
      */
-    static function checkCaptcha($strCaptcha, $key, $ignoreKey = false)
+    static function checkCaptcha($strCaptcha, $key)
     {
-        $return = false;
         $session = JFactory::getSession();
         $arrSession = $session->get('plgCaptchaQlcaptcha');
-        if (isset($strCaptcha) && is_array($arrSession) && isset($arrSession['code'][$key]) && isset($arrSession['code'][$key]) && $strCaptcha == $arrSession['code'][$key]) $return = true;
-        return $return;
+        if (isset($strCaptcha) && is_array($arrSession) && isset($arrSession['code'][$key]) && isset($arrSession['code'][$key]) && $strCaptcha == $arrSession['code'][$key]) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -106,11 +114,21 @@ class plgCaptchaQlcaptcha2
     {
         $session = JFactory::getSession();
         $arrSession = $session->get('plgCaptchaQlcaptcha');
-        if (!is_array($arrSession)) $arrSession = [];
-        if (!isset($arrSession['filename']) || !is_array($arrSession['filename'])) $arrSession['filename'] = [];
-        if (!isset($arrSession['text']) || !is_array($arrSession['filename'])) $arrSession['text'] = [];
-        if (!isset($arrSession['code']) || !is_array($arrSession['code'])) $arrSession['code'] = [];
-        if (!isset($arrSession['code'][$key])) $arrSession['code'][$key] = [];
+        if (!is_array($arrSession)) {
+            $arrSession = [];
+        }
+        if (!isset($arrSession['filename']) || !is_array($arrSession['filename'])) {
+            $arrSession['filename'] = [];
+        }
+        if (!isset($arrSession['text']) || !is_array($arrSession['filename'])) {
+            $arrSession['text'] = [];
+        }
+        if (!isset($arrSession['code']) || !is_array($arrSession['code'])) {
+            $arrSession['code'] = [];
+        }
+        if (!isset($arrSession['code'][$key])) {
+            $arrSession['code'][$key] = [];
+        }
         $arrSession['text'][$key] = $this->obj_captcha->text;
         $arrSession['filename'][$key] = $this->destination;
         $arrSession['code'][$key] = $this->obj_captcha->solution;
@@ -126,7 +144,9 @@ class plgCaptchaQlcaptcha2
             mkdir($folder);
             chmod($folder, 0755);
         }
-        if (!is_file($folder . '/index.html')) touch($folder . '/index.html');
+        if (!is_file($folder . '/index.html')) {
+            touch($folder . '/index.html');
+        }
         $this->checkTmpQlcaptchaFiles($folder);
     }
 
@@ -137,10 +157,13 @@ class plgCaptchaQlcaptcha2
     {
         $handle = opendir($folder);
         while ($file = readdir($handle)) {
-            if ('.' != $file && '..' != $file && 'index.html' != $file) {
-                $arr = preg_split('?_?', $file);
-                $dateFile = substr(array_pop($arr), 0, 6);
-                if ($dateFile + 1 < date('ymd') && file_exists($folder . '/' . $file)) unlink($folder . '/' . $file);
+            if ('.' === $file || '..' === $file || 'index.html' === $file) {
+                continue;
+            }
+            $arr = preg_split('?_?', $file);
+            $dateFile = (int)substr(array_pop($arr), 0, 6);
+            if ($dateFile + 1 < date('ymd') && file_exists($folder . '/' . $file)) {
+                unlink($folder . '/' . $file);
             }
         }
         closedir($handle);
@@ -153,9 +176,12 @@ class plgCaptchaQlcaptcha2
      */
     function getKey($key = false, $ignoreKey = false)
     {
-        //if(true==$ignoreKey)return 1;
-        if (false == $key) $key = rand(1, 10000);
-        if (isset($_SESSION['plgCaptchaQlcaptcha']) && isset($_SESSION['plgCaptchaQlcaptcha']['code']) && isset($_SESSION['plgCaptchaQlcaptcha']['code'][$key])) $key = $this->getKey($key);
+        if (false == $key) {
+            $key = rand(1, 10000);
+        }
+        if (isset($_SESSION['plgCaptchaQlcaptcha']) && isset($_SESSION['plgCaptchaQlcaptcha']['code']) && isset($_SESSION['plgCaptchaQlcaptcha']['code'][$key])) {
+            $key = $this->getKey($key);
+        }
         return $key;
     }
 
