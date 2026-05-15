@@ -8,12 +8,14 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+use Joomla\CMS\Plugin\CMSPlugin;
+
 defined('_JEXEC') or die;
 
 /**
  * Qlcaptcha Plugin.
  */
-class PlgCaptchaQlcaptcha extends JPlugin
+class PlgCaptchaQlcaptcha extends CMSPlugin
 {
     /**
      * Load the language file on instantiation.
