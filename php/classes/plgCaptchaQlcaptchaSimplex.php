@@ -79,6 +79,17 @@ class plgCaptchaQlcaptchaSimplex
      * @access public
      */
     public $intFontStartY = 50;
+    private mixed $strCaptchaSaveFile;
+    /**
+     * @var int|mixed
+     */
+    private mixed $transparent;
+    public $captcha;
+    /**
+     * @var false|GdImage|resource
+     */
+    private $handleImage;
+    public string $text;
 
     /**
      * wants to have file path and folder path
@@ -100,12 +111,15 @@ class plgCaptchaQlcaptchaSimplex
      */
     function generateCaptcha()
     {
+        $fontPath = JPATH_ROOT . '/' . $this->strFont;
         $this->handleImage = imagecreate($this->intIMGWidth, $this->intIMGHeight);
         $colBackground = imagecolorallocate($this->handleImage, $this->arrBGColor[0], $this->arrBGColor[1], $this->arrBGColor[2]);
         $text_color = imagecolorallocate($this->handleImage, $this->arrTextColor[0], $this->arrTextColor[1], $this->arrTextColor[2]);
         $this->text = $this->randomText();
-        ImageTTFText($this->handleImage, $this->intFontSize, $this->intFontAngel, $this->intFontStartX, $this->intFontStartY, $text_color, $this->strFont, (string)$this->text);
-        if (1 == $this->transparent) imagecolortransparent($this->handleImage, $colBackground);
+        imagettftext($this->handleImage, $this->intFontSize, $this->intFontAngel, $this->intFontStartX, $this->intFontStartY, $text_color, $fontPath, (string)$this->text);
+        if (1 == $this->transparent) {
+            imagecolortransparent($this->handleImage, $colBackground);
+        }
         imagegif($this->handleImage, $this->strCaptchaSaveFile);
         chmod($this->strCaptchaSaveFile, 0755);
         //echo '#'.$this->strCaptchaSaveFile.' '.$this->text.'=>'.$this->solution.' #';die;
@@ -114,14 +128,13 @@ class plgCaptchaQlcaptchaSimplex
 
     /**
      * generates a random text for the captcha image
-     * @param int the wanted lenght of the text
      * @return string
      */
-    function randomText()
+    function randomText(): string
     {
         $chars = 'bcdefghkmnopqrstuvwxyz2345678';
         $string = '';
-        mt_srand((double)microtime() * 1000000);
+        mt_srand((float)microtime() * 1000000);
         for ($i = 0; $i < $this->intTextLenght; $i++) {
             $string .= $chars[mt_rand(0, strlen($chars) - 1)];
         }

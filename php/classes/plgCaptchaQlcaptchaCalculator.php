@@ -12,6 +12,9 @@ defined('_JEXEC') or die;
 
 class plgCaptchaQlcaptchaCalculator extends plgCaptchaQlcaptchaSimplex
 {
+    private int $level;
+    public $captcha;
+
     /**
      * generates a random text for the captcha image
      * @param int the wanted lenght of the text

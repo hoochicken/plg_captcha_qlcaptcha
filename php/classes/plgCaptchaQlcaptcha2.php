@@ -12,15 +12,23 @@ defined('_JEXEC') or die;
 
 class plgCaptchaQlcaptcha2
 {
+    private mixed $_name;
+    private mixed $params;
+    private mixed $tmp;
+    private string $destination;
+    public string $captcha;
+    private $type;
+    private $fontPath;
+    public int|bool $key;
+    private plgCaptchaQlcaptchaCalculator|null|plgCaptchaQlcaptchaSimplex $obj_captcha;
     /**
      * wants to have file path and folder path
      * @param $obj
      * @param $tmp
-     * @return bool ture on success, false on failure
      */
     //function __construct($strFont,$strCaptchaSaveFile)
 
-    public function initiateCaptcha($obj, $tmp)
+    public function initiateCaptcha($obj, $tmp):void
     {
         $this->_name = $obj->getExtName();
         $this->params = $obj->params;
@@ -110,7 +118,7 @@ class plgCaptchaQlcaptcha2
      * start session and initiate session variables
      * @return string the rendered text
      */
-    function setSession($key)
+    function setSession($key): void
     {
         $session = JFactory::getSession();
         $arrSession = $session->get('plgCaptchaQlcaptcha');

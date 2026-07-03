@@ -8,6 +8,8 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 
 defined('_JEXEC') or die;
@@ -26,6 +28,7 @@ class PlgCaptchaQlcaptcha extends CMSPlugin
     protected $autoloadLanguage = true;
     protected plgCaptchaQlcaptcha2 $obj_captcha;
     protected array $messages = [];
+    private $extName;
 
     /**
      * constructor
@@ -37,18 +40,7 @@ class PlgCaptchaQlcaptcha extends CMSPlugin
         $this->loadLanguage();
     }
 
-    /**
-     * Initialise the captcha
-     *
-     * @param string $id The id of the field.
-     *
-     * @return  Boolean    True on success, false otherwise
-     *
-     * @throws  Exception
-     *
-     * @since  2.5
-     */
-    public function onInit(string $id = 'qlcaptcha')
+    public function onInit(string $id = 'qlcaptcha'): void
     {
         try {
             require_once(JPATH_ROOT . '/plugins/captcha/qlcaptcha/php/classes/plgCaptchaQlcaptcha2.php');
@@ -67,7 +59,7 @@ class PlgCaptchaQlcaptcha extends CMSPlugin
         }
     }
 
-    public function setExtName($value)
+    public function setExtName($value): void
     {
         $this->extName = $value;
     }
@@ -77,19 +69,7 @@ class PlgCaptchaQlcaptcha extends CMSPlugin
         return $this->extName;
     }
 
-    /**
-     * Gets the challenge HTML
-     *
-     * @param string $name The name of the field. Not Used.
-     * @param string $id The id of the field.
-     * @param string $class The class of the field. This should be passed as
-     *                          e.g. 'class="required"'.
-     *
-     * @return  string  The HTML to be embedded in the form.
-     *
-     * @since  2.5
-     */
-    public function onDisplay($name = null, $id = 'dynamic_qlcaptcha_1', $class = '')
+    public function onDisplay($name = null, $id = 'dynamic_qlcaptcha_1', $class = ''): string
     {
         $html = [];
         if (0 < count($this->messages)) {
@@ -121,24 +101,20 @@ class PlgCaptchaQlcaptcha extends CMSPlugin
      * @throws Exception
      * @since  2.5
      */
-    public function onCheckAnswer(string $code = null)
+    public function onCheckAnswer(?string $code = null)
     {
-        $input = JFactory::getApplication()->input;
+        $input = Factory::getApplication()->input;
         $strCaptcha = $input->getString('qlcaptcha');
         $key = $input->getString('qlcaptchakey');
 
         require_once(JPATH_ROOT . '/plugins/captcha/qlcaptcha/php/classes/plgCaptchaQlcaptcha2.php');
         $validated = plgCaptchaQlcaptcha2::checkCaptcha($strCaptcha, $key, true);
         if (!$validated) {
-            JFactory::getApplication()->enqueueMessage(JText::_('PLG_CAPTCHA_QLCAPTCHA_MSG_CAPTCHAFAILED'));
+            Factory::getApplication()->enqueueMessage(Text::_('PLG_CAPTCHA_QLCAPTCHA_MSG_CAPTCHAFAILED'));
         }
         return $validated;
     }
-
-    /**
-     * @param $message
-     * @return void
-     */
+    
     private function setMessage($message)
     {
         $this->messages[] = $message;
